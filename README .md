@@ -1,0 +1,5 @@
+# android 体系结构
+*底层linux操作系统
+*library c/c++的函数库
+*应用程序框架层 java提供的函数库
+*应用程序
