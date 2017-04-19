@@ -1,0 +1,108 @@
+
+## 数据存储
+* 文件
+>存数据
+* SharedPerference
+>当有一个或者多个配置信息需要保存
+* 数据库(特殊的文件,带索引)
+>当我们有大量的相似结构的数据存放,实现增删改查,推荐使用数据库.
+
+
+## Android下的数据库
+> Sqlite数据库, 移动平台轻量级嵌入式的数据库.
+
+## 如何创建
+> 创建文件
+		
+		//声明了一个文件对象,文件的句柄		
+		File file  = new File("文件名");
+		//重要的一步
+		FileOutputStream fos = new FileOutputStream(file);
+		//通过输出流写数据文件才被创建
+		fos.write("gagagaga".getBytes());
+
+> 创建数据库
+
+		//1.声明数据库的文件对象
+		MyDBOpenHelper helper = new MyDBOpenHelper(this);
+		//2.关键代码,必须通过帮助类 获取一个数据库文件
+		helper.getWritableDatabase();
+		//只有获取了可写或者是可读的数据库 ,数据库文件才会被创建
+
+## 如何定义数据库的表结构
+>数据库创建的帮助类SQLiteOpenHelper里面,有两个重要的方法
+>1. onCreate() 数据库第一次被创建的时候调用的方法
+>		适合做数据库表结构的初始化
+>2. onUpgrade() 数据库的版本号增加的时候调用的方法
+>		如果旧的数据库表结构定义的不是特别合理,修改数据库的表结构
+
+在onCreate()和onUpgrade()方法里面都有一个参数 db ,代表的是当前的数据库
+得到数据库 执行sql语句
+		
+		db.execSQL("create table contactinfo (id integer primary key autoincrement, name varchar(20), phone varchar(20))");
+
+
+## 增删改查的sql语句
+* 增
+		insert into contactinfo (name,phone) values ('zhangsan','110')
+* 删
+		delete from contactinfo where id='1'
+* 改
+		update contactinfo set phone ='119' where name='zhangsan'
+* 查
+		select phone from contactinfo where name='zhangsan'
+
+*　利用谷歌api实现增删改查(内部工作的原理,组拼sql语句)
+>推荐大家使用谷歌的api实现增删改查,有返回值处理方便,避免了手写sql语句出错的问题.
+
+
+## 修改cmd的默认编码
+> chcp 65001 改成utf-8的编码
+> chcp 936 修改为gbk的编码
+
+## ListView
+使用步骤:
+1. 在布局文件里面声明listview
+		    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/lv" />
+2. 在代码寻找listview
+		lv = (ListView) findViewById(R.id.lv);
+3. 设置listview的数据适配器(controller)
+		写一个类继承BaseAdapter,重写里面两个方法
+
+		@Override
+		public int getCount() {
+			//返回listview一共有多少条记录
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			//返回当前位置用户看到的view对象.
+		}
+4. 给listview设置数据适配器
+		lv.setAdapter(adapter);
+5. 如果有需求对listview进行优化,使用convertView,别回收的view的对象.
+
+
+
+## 打气筒把xml文件转化成view
+View view = View.inflate(getApplicationContext(), R.layout.item, null);
+
+
+## 常见对话框
+
+
+## 样式
+css样式 
+>作用在某个控件上的.
+
+## 主题
+>主题的写法和样式的写法是完全一样的.
+>区别是作用范围不同
+>作用在整个应用程序上,或者是应用程序里面的activity上的
+
+
+## 动画
+* 帧动画
